@@ -1,0 +1,41 @@
+.gradle/
+build/
+run/
+.idea/
+*.iml
+.vscode/
+
+# Local libraries and dependency caches
+/Libs/
+/libs/
+/Libraries/
+/libraries/
+.m2/
+.classpath
+.project
+.settings/
+
+# Java / Gradle outputs
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+replay_pid*
+
+# IDE and editor state
+.fleet/
+.metadata/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example

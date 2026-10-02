@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "dev.zpp.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["ZombieEntityMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

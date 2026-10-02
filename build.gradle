@@ -1,0 +1,73 @@
+plugins {
+    id 'fabric-loom' version '1.9.2'
+    id 'maven-publish'
+}
+version = project.mod_version
+group = project.group
+base { archivesName = 'zombie-apocalipse-plus-plus' }
+repositories { mavenCentral() }
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') { expand 'version': project.version }
+}
+java { toolchain.languageVersion = JavaLanguageVersion.of(21); withSourcesJar() }
+tasks.withType(JavaCompile).configureEach { options.release = 21; options.encoding = 'UTF-8' }
+test { useJUnitPlatform() }
+jar { from('LICENSE') { rename { "${it}_ZPP" } } }
+
+// Separate development-only test mod; never included in the release jar.
+sourceSets {
+    integrationTest {
+        compileClasspath += sourceSets.main.compileClasspath + sourceSets.main.output
+        runtimeClasspath += sourceSets.main.runtimeClasspath + sourceSets.main.output
+    }
+}
+loom {
+    mods {
+        zpp { sourceSet sourceSets.main }
+        zpp_integration { sourceSet sourceSets.integrationTest }
+    }
+    runs {
+        integrationTest {
+            server()
+            name 'ZPP integration server'
+            source sourceSets.integrationTest
+            runDir 'build/integration-server'
+            programArg 'nogui'
+            vmArg '-Dzpp.integration=true'
+        }
+    }
+}
+tasks.named('runIntegrationTest') {
+    doFirst {
+        def testDir = layout.buildDirectory.dir('integration-server').get().asFile
+        delete testDir
+        testDir.mkdirs()
+        new File(testDir, 'eula.txt').text = 'eula=true\n'
+        new File(testDir, 'server.properties').text = '''server-ip=127.0.0.1
+server-port=0
+online-mode=false
+view-distance=3
+simulation-distance=3
+spawn-protection=0
+level-type=minecraft:flat
+generator-settings={"layers":[{"block":"minecraft:bedrock","height":1},{"block":"minecraft:dirt","height":2},{"block":"minecraft:grass_block","height":1}],"biome":"minecraft:plains"}
+generate-structures=false
+sync-chunk-writes=false
+max-tick-time=120000
+'''
+    }
+    doLast {
+        def result = layout.buildDirectory.file('integration-server/PASSED.txt').get().asFile
+        if (!result.exists()) throw new GradleException('ZPP integration tests failed; see build/integration-server/logs/latest.log')
+        logger.lifecycle(result.text.trim())
+    }
+}

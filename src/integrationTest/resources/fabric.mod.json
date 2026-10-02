@@ -1,0 +1,1 @@
+{"schemaVersion":1,"id":"zpp_integration","version":"1.0.0","name":"ZPP integration tests","environment":"server","entrypoints":{"main":["dev.zpp.IntegrationTests"]},"depends":{"zpp":"*"}}
