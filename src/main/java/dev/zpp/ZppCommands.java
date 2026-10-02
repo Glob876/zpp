@@ -54,7 +54,7 @@ public final class ZppCommands {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         var root = literal("zpp").executes(ctx -> status(ctx.getSource()));
         root.then(literal("help").executes(ctx -> {
-            say(ctx.getSource(), "Zombie Apocalipse++ • Minecraft 1.21.1 • Fabric\n"
+            say(ctx.getSource(), "Zombie Apocalipse++ • Minecraft 1.20.1 • Fabric\n"
                     + "/zpp status | day | stats | config | reload\n"
                     + "/zpp toggle | enabled|dayburn|babies <true|false>\n"
                     + "/zpp dayspawn|nightspawn amount <0..64>\n"

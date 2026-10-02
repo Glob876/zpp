@@ -1,17 +1,17 @@
 # Zombie Apocalipse++
 
-**ZPP** is a configurable, server-side zombie-apocalypse mod for **Minecraft Java 1.21.1 / Fabric / Java 21**. Players can join using a regular 1.21.1 client; they do not need ZPP or Fabric API installed on their client. The mod also works in a local single-player world's integrated server when installed locally with Fabric API.
+**ZPP** is a configurable, server-side zombie-apocalypse mod for **Minecraft Java 1.20.1 / Fabric / Java 17**. Players can join using a regular 1.20.1 client; they do not need ZPP or Fabric API installed on their client. The mod also works in a local single-player world's integrated server when installed locally with Fabric API.
 
 The Russian documentation is available in [README.ru.md](README.ru.md).
 
 ## Installation
 
-1. Set up a Minecraft **1.21.1** server with Fabric Loader **0.16.10+** and Java **21+**.
-2. Put `zombie-apocalipse-plus-plus-1.0.0.jar` and Fabric API for 1.21.1 into the server's `mods/` directory.
+1. Set up a Minecraft **1.20.1** server with Fabric Loader **0.15.11+** and Java **17+**.
+2. Put `zombie-apocalipse-plus-plus-1.0.0+1.20.1.jar` and Fabric API for 1.20.1 into the server's `mods/` directory.
 3. Start the server. It creates `world/zpp.json` on a dedicated server or `saves/<world name>/zpp.json` in single player.
 4. Run `/zpp` or `/zpp help`. ZPP starts disabled; enable it with `/zpp toggle` or `/zpp enabled true`. Changing settings requires OP level 2.
 
-The release JAR is `build/libs/zombie-apocalipse-plus-plus-1.0.0.jar`; the `-sources` JAR is not for the `mods/` directory.
+The release JAR is `build/libs/zombie-apocalipse-plus-plus-1.0.0+1.20.1.jar`; the `-sources` JAR is not for the `mods/` directory.
 
 ## Highlights
 
@@ -96,7 +96,7 @@ Named presets are stored in Fabric's global `config/zpp-presets.json`. `save` ca
 ./gradlew runIntegrationTest
 ```
 
-Use JDK 21. `build` runs unit tests; `runIntegrationTest` starts an isolated Fabric server and verifies commands, mixins, events, and spawning. See [docs/TESTING.md](docs/TESTING.md) for test notes.
+Use JDK 17. `build` runs unit tests; `runIntegrationTest` starts an isolated Fabric server and verifies commands, mixins, events, and spawning. See [docs/TESTING.md](docs/TESTING.md) for test notes.
 
 ## License and credits
 

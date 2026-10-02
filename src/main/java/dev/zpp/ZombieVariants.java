@@ -8,19 +8,19 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 import java.util.Map;
+import java.util.UUID;
 
 public final class ZombieVariants {
     public static final String MANAGED = "zpp.spawned";
     public static final Map<String, EntityType<? extends ZombieEntity>> TYPES = Map.of(
             "zombie", EntityType.ZOMBIE, "drowned", EntityType.DROWNED,
             "husk", EntityType.HUSK, "zombie_villager", EntityType.ZOMBIE_VILLAGER);
-    private static final Identifier SCALE = Identifier.of("zpp", "day_scaling");
+    private static final UUID SCALE = UUID.nameUUIDFromBytes("zpp:day_scaling".getBytes());
     private ZombieVariants() {}
     public static boolean supported(ZombieEntity zombie) { return TYPES.containsValue(zombie.getType()); }
     public static String key(String raw) {
@@ -77,17 +77,17 @@ public final class ZombieVariants {
                 || scaled(mob, EntityAttributes.GENERIC_ATTACK_DAMAGE)
                 || scaled(mob, EntityAttributes.GENERIC_MOVEMENT_SPEED);
     }
-    private static boolean scaled(MobEntity mob, RegistryEntry<EntityAttribute> attribute) {
+    private static boolean scaled(MobEntity mob, EntityAttribute attribute) {
         var instance = mob.getAttributeInstance(attribute);
         return instance != null && instance.getModifier(SCALE) != null;
     }
-    private static void modifier(MobEntity zombie, RegistryEntry<EntityAttribute> attribute, double amount) {
+    private static void modifier(MobEntity zombie, EntityAttribute attribute, double amount) {
         var instance = zombie.getAttributeInstance(attribute);
         if (instance == null) return;
         var old = instance.getModifier(SCALE);
-        if (old != null && old.value() == amount) return;
+        if (old != null && old.getValue() == amount) return;
         instance.removeModifier(SCALE);
-        if (amount != 0) instance.addPersistentModifier(new EntityAttributeModifier(SCALE, amount,
-                EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+        if (amount != 0) instance.addPersistentModifier(new EntityAttributeModifier(SCALE, "zpp.day_scaling", amount,
+                EntityAttributeModifier.Operation.MULTIPLY_BASE));
     }
 }

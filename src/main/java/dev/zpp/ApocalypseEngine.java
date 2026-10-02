@@ -135,7 +135,7 @@ public final class ApocalypseEngine {
             if (zombie == null) continue;
             zombie.refreshPositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
             zombie.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT,
-                    zombie instanceof ZombieEntity ? new ZombieEntity.ZombieData(false, false) : null);
+                    zombie instanceof ZombieEntity ? new ZombieEntity.ZombieData(false, false) : null, null);
             if (zombie instanceof ZombieEntity z) z.setBaby(c.babies && world.random.nextInt(100) < c.babyChance);
             zombie.addCommandTag(ZombieVariants.MANAGED);
             if (!world.isSpaceEmpty(zombie) || !world.getWorldBorder().contains(zombie.getBoundingBox())) continue;

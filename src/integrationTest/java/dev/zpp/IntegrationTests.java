@@ -7,7 +7,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.c2s.common.SyncedClientOptions;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -90,7 +89,7 @@ public final class IntegrationTests implements ModInitializer {
         server.setDifficulty(Difficulty.NORMAL,true);
         for (int x=-4;x<=4;x++) for (int z=-4;z<=4;z++) world.getChunk(x,z);
         for (int x=-60;x<=60;x++) for (int z=-60;z<=60;z++) world.setBlockState(new BlockPos(x,80,z),Blocks.STONE.getDefaultState(),2);
-        var player=new ServerPlayerEntity(server,world,new GameProfile(UUID.randomUUID(),"ZppTest"),SyncedClientOptions.createDefault());
+        var player=new ServerPlayerEntity(server,world,new GameProfile(UUID.randomUUID(),"ZppTest"));
         player.refreshPositionAndAngles(0.5,81,0.5,0,0);
         dispatcher.execute("zpp spawn maxlight 15",source);
         for (String type : ZppConfig.defaultWeights().keySet()) {
@@ -147,7 +146,7 @@ public final class IntegrationTests implements ModInitializer {
         // Clean defaults keep the test repeatable.
         ZppMod.STORE.replace(new ZppConfig());
         var state=ApocalypseState.get(server);
-        var nbt=state.writeNbt(new NbtCompound(),server.getRegistryManager());
+        var nbt=state.writeNbt(new NbtCompound());
         check(nbt.getLong("spawned")==12,"persistent stats serialize");
         check(dispatcher.execute("zpp variants add minecraft:squid 25",source)==1,"add non-zombie mob by ID");
         check(ZppMod.config().variants.get("minecraft:squid")==25,"custom weight stored");
