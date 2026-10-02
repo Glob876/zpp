@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="GPL-3.0-only"
+[[mods]]
+modId="zpp"
+version="${version}"
+displayName="Zombie Apocalipse++"
+description='''A configurable server-side zombie apocalypse: variants, waves, hordes and blood moons.'''
+logoFile="icon.png"
+authors="Glob876"
+[[dependencies.zpp]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.zpp]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+ordering="NONE"
+side="BOTH"
+[[mixins]]
+config="zpp.mixins.json"

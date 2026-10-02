@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-/** Named snapshots shared by every world in this Fabric installation. */
+/** Named snapshots shared by every world in this NeoForge installation. */
 public final class PresetStore {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Type TYPE = new TypeToken<LinkedHashMap<String, ZppConfig>>() {}.getType();

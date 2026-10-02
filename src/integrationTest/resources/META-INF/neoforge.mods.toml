@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="GPL-3.0-only"
+[[mods]]
+modId="zpp_integration"
+version="1.0.0"
+displayName="ZPP Integration Tests"
+[[dependencies.zpp_integration]]
+modId="zpp"
+type="required"
+versionRange="[1.0.0,)"
+ordering="AFTER"
+side="SERVER"

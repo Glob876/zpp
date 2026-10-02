@@ -1,17 +1,17 @@
 # Zombie Apocalipse++
 
-**ZPP** is a configurable, server-side zombie-apocalypse mod for **Minecraft Java 1.21.1 / Fabric / Java 21**. Players can join using a regular 1.21.1 client; they do not need ZPP or Fabric API installed on their client. The mod also works in a local single-player world's integrated server when installed locally with Fabric API.
+**ZPP** is a configurable, server-side zombie-apocalypse mod for **Minecraft Java 1.21.1 / NeoForge / Java 21**. Players can join using a regular 1.21.1 client; they do not need ZPP or NeoForge installed on their client. The mod also works in a local single-player world's integrated server when installed locally with NeoForge.
 
 The Russian documentation is available in [README.ru.md](README.ru.md).
 
 ## Installation
 
-1. Set up a Minecraft **1.21.1** server with Fabric Loader **0.16.10+** and Java **21+**.
-2. Put `zombie-apocalipse-plus-plus-1.0.0.jar` and Fabric API for 1.21.1 into the server's `mods/` directory.
+1. Set up a Minecraft **1.21.1** server with NeoForge **21.1.65+** and Java **21+**.
+2. Put `zombie-apocalipse-plus-plus-neoforge-1.0.0.jar` into the server's `mods/` directory.
 3. Start the server. It creates `world/zpp.json` on a dedicated server or `saves/<world name>/zpp.json` in single player.
 4. Run `/zpp` or `/zpp help`. ZPP starts disabled; enable it with `/zpp toggle` or `/zpp enabled true`. Changing settings requires OP level 2.
 
-The release JAR is `build/libs/zombie-apocalipse-plus-plus-1.0.0.jar`; the `-sources` JAR is not for the `mods/` directory.
+The release JAR is `build/libs/zombie-apocalipse-plus-plus-neoforge-1.0.0.jar`; the `-sources` JAR is not for the `mods/` directory.
 
 ## Highlights
 
@@ -72,7 +72,7 @@ Settings without a value display their current value. Configuration edits, manua
 Manual spawning bypasses the grace period, death cooldown, and configured day/night amount, but still respects the master switch, difficulty, `doMobSpawning`, placement checks, and caps.
 Changing settings or applying a built-in preset while ZPP is off keeps it off and prints a reminder. Each world's `zpp.json` is independent. The old shared `.minecraft/config/zpp.json` is no longer read; copy its values into a world's file if needed.
 
-Named presets are stored in Fabric's global `config/zpp-presets.json`. `save` captures the complete current configuration, including `enabled` and the mob list; `load` applies it to the current world. Names use 1–32 lowercase letters, digits, `_`, or `-`. A mod providing a custom mob must be installed when its preset is applied. Existing built-in presets retain their partial-update behavior. Added mobs use the same wave caps and attribute scaling where supported; the baby setting applies only to zombie types.
+Named presets are stored in NeoForge's global `config/zpp-presets.json`. `save` captures the complete current configuration, including `enabled` and the mob list; `load` applies it to the current world. Names use 1–32 lowercase letters, digits, `_`, or `-`. A mod providing a custom mob must be installed when its preset is applied. Existing built-in presets retain their partial-update behavior. Added mobs use the same wave caps and attribute scaling where supported; the baby setting applies only to zombie types.
 
 ## Defaults
 
@@ -93,10 +93,11 @@ Named presets are stored in Fabric's global `config/zpp-presets.json`. `save` ca
 
 ```sh
 ./gradlew build
+./gradlew runClient
 ./gradlew runIntegrationTest
 ```
 
-Use JDK 21. `build` runs unit tests; `runIntegrationTest` starts an isolated Fabric server and verifies commands, mixins, events, and spawning. See [docs/TESTING.md](docs/TESTING.md) for test notes.
+Use JDK 21. `build` runs unit tests; `runClient` launches Minecraft with ZPP for local play; `runIntegrationTest` starts an isolated NeoForge server and verifies commands, mixins, scaling, events, persistence, and real spawning. The test mod is excluded from the release JAR.
 
 ## License and credits
 

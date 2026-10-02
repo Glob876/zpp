@@ -2,8 +2,7 @@ package dev.zpp;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
+import net.minecraft.server.level.ServerLevel;
 
 /** Validated per-world settings. Commands save a candidate before replacing live settings. */
 public final class ZppConfig {
@@ -66,12 +65,12 @@ public final class ZppConfig {
         for (var e : variants.entrySet()) {
             if (e.getValue() == null) throw new IllegalArgumentException("Missing weight: " + e.getKey());
             range(e.getKey(), e.getValue(), 0, 1000); sum += e.getValue();
-            if (Identifier.tryParse(e.getKey()) == null)
+            if (!e.getKey().matches("(?:[a-z0-9_.-]+:)?[a-z0-9_./-]+"))
                 throw new IllegalArgumentException("Invalid entity ID: " + e.getKey());
         }
         if (sum == 0) throw new IllegalArgumentException("At least one mob type must have a weight greater than 0");
     }
-    public void validateMobTypes(ServerWorld world) {
+    public void validateMobTypes(ServerLevel world) {
         for (String id : variants.keySet())
             if (ZombieVariants.createMob(id, world) == null)
                 throw new IllegalArgumentException("Unknown or non-mob entity ID: " + id);
